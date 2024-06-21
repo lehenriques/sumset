@@ -4,7 +4,7 @@ Todas as especificações de versões do laravel foram levada em conta.
 
 O projeto esta preparado para rodar com o sail do laravel, mais também e possível acessar através de um servidor LAMP ou LNMP.
 
-O projeto esta com seed para criar os usuários solicitados.
+O projeto esta com seed para criar os usuários solicitados (a senha ficou password).
 
 quando rodar o migration colocar o --seed junto.
 
