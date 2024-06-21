@@ -26,13 +26,13 @@ Route::middleware(['api', 'jwt.verify'])->name('v1.')->namespace('V1')->prefix('
             'wide' => Wide::all('id as value', 'name as label'),
         ];
         return response()->json($response, 200);
-    })->name('attributes');
+    })->middleware('checkRole')->name('attributes');
 
     Route::get('products', [\App\Http\Controllers\API\v1\ProductController::class, 'index'])->name('products.index');
     Route::get('products/{product}', [\App\Http\Controllers\API\v1\ProductController::class, 'show'])->name('products.show');
-    Route::post('products', [\App\Http\Controllers\API\v1\ProductController::class, 'store'])->name('products.store');
-    Route::put('products/{product}', [\App\Http\Controllers\API\v1\ProductController::class, 'update'])->name('products.update');
-    Route::delete('products/{product}', [\App\Http\Controllers\API\v1\ProductController::class, 'destroy'])->name('products.destroy');
+    Route::post('products', [\App\Http\Controllers\API\v1\ProductController::class, 'store'])->middleware('checkRole')->name('products.store');
+    Route::put('products/{product}', [\App\Http\Controllers\API\v1\ProductController::class, 'update'])->middleware('checkRole')->name('products.update');
+    Route::delete('products/{product}', [\App\Http\Controllers\API\v1\ProductController::class, 'destroy'])->middleware('checkRole')->name('products.destroy');
 
     Route::get('shoppings', [ShoppingController::class, 'index'])->name('shoppings.index');
     Route::get('shopping/{id}', [ShoppingController::class, 'show'])->name('shopping.show');
