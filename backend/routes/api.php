@@ -8,16 +8,15 @@ use App\Models\Diameter;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\v1\ShoppingController;
+
 Route::group(['middleware' => 'api', 'prefix' => 'v1'], function ($router) {
 
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('logout', [AuthController::class, 'logout'])->middleware('jwt.verify')->name('auth.logout');
     Route::post('refresh', [AuthController::class, 'refresh'])->middleware('jwt.verify')->name('auth.refresh');
     Route::post('profile', [AuthController::class, 'profile'])->middleware('jwt.verify')->name('auth.profile');
-});
 
-Route::middleware(['api', 'jwt.verify'])->name('v1.')->namespace('V1')->prefix('v1')->group(function () {
-    Route::get('attributes', function() {
+    Route::get('attributes', function () {
         $response = [
             'brand' => Brand::all('id as value', 'name as label'),
             'category' => Category::all('id as value', 'name as label'),
@@ -26,8 +25,13 @@ Route::middleware(['api', 'jwt.verify'])->name('v1.')->namespace('V1')->prefix('
             'wide' => Wide::all('id as value', 'name as label'),
         ];
         return response()->json($response, 200);
-    })->middleware('checkRole')->name('attributes');
+    })->name('attributes');
 
+    Route::get('produtos', [\App\Http\Controllers\API\ProdutoController::class, 'index'])->name('produtos.index');
+    Route::get('produtos/{product}/show', [\App\Http\Controllers\API\ProdutoController::class, 'show'])->name('produtos.show');
+});
+
+Route::middleware(['api', 'jwt.verify'])->name('v1.')->namespace('V1')->prefix('v1')->group(function () {
     Route::get('products', [\App\Http\Controllers\API\v1\ProductController::class, 'index'])->name('products.index');
     Route::get('products/{product}', [\App\Http\Controllers\API\v1\ProductController::class, 'show'])->name('products.show');
     Route::post('products', [\App\Http\Controllers\API\v1\ProductController::class, 'store'])->middleware('checkRole')->name('products.store');
@@ -42,3 +46,4 @@ Route::middleware(['api', 'jwt.verify'])->name('v1.')->namespace('V1')->prefix('
     Route::get('shopping/{id}/add/{product}/qtd/{qtd}', [ShoppingController::class, 'add'])->name('shopping.add');
     Route::get('shopping/{id}/remove/{product}', [ShoppingController::class, 'remove'])->name('shopping.remove');
 });
+

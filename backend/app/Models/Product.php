@@ -28,6 +28,18 @@ class Product extends Model
         'tall_id',
         'wide_id'
     ];
+    protected $appends = ['dolar', 'real'];
+
+
+    public function getDolarAttribute()
+    {
+        return number_format((float)$this->price / 7.470, 2, ',', '.');
+    }
+
+    public function getRealAttribute()
+    {
+        return number_format((float)$this->price / 1.400, 2, ',', '.');
+    }
 
     /**
      * Interact with the product price.
@@ -36,7 +48,7 @@ class Product extends Model
     {
         return Attribute::make(
             get: fn (float $value) => number_format($value, 2, ',', '.'),
-            set: fn (float $value) => number_format($value, 2, '.', ','),
+            set: fn (float $value) => str_replace(',', '.', str_replace('.', '', $value)),
         );
     }
 

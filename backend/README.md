@@ -9,4 +9,4 @@ O projeto esta com seed para criar os usuários solicitados (a senha ficou passw
 quando rodar o migration colocar o --seed junto.
 
 Esta toda em API anexando um documento do postman onde é possível testar as rodas.
-nome do arquivo: Sumset.postman_collection.json
+nome do arquivo: Sunset.postman_collection.json

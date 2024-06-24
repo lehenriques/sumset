@@ -45,14 +45,14 @@ class StoreProduct extends FormRequest
         $product = Product::create([
             'name' => $this->nome,
             'description' => $this->description,
-            'price' => $this->price,
+            'price' => (float) $this->price,
             'stock_quantity' => $this->stock_quantity,
             'photo' => $path,
-            'brand_id' => $this->brand,
-            'category_id' => $this->category,
-            'diameter_id' => $this->diameter,
-            'tall_id' => $this->tall,
-            'wide_id' => $this->wide,
+            'brand_id' => is_array($this->brand) ? $this->brand['value'] : $this->brand,
+            'category_id' => is_array($this->category) ? $this->category['value'] : $this->category,
+            'diameter_id' => is_array($this->diameter) ? $this->diameter['value'] : $this->diameter,
+            'tall_id' => is_array($this->tall) ? $this->tall['value'] : $this->tall,
+            'wide_id' => is_array($this->wide) ? $this->wide['value'] : $this->wide,
         ]);
         
         return $product;

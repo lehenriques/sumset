@@ -39,13 +39,13 @@ class UpdateProduct extends FormRequest
         $product = Product::whereId($product->id)->first();
         $product->name = $this->nome;
         $product->description = $this->description;
-        $product->price = $this->price;
+        $product->price = (float) $this->price;
         $product->stock_quantity = $this->stock_quantity;
-        $product->brand_id = $this->brand;
-        $product->category_id = $this->category;
-        $product->diameter_id = $this->diameter;
-        $product->tall_id = $this->tall;
-        $product->wide_id = $this->wide;
+        $product->brand_id = is_array($this->brand) ? $this->brand['value'] : $this->brand;
+        $product->category_id = is_array($this->category) ? $this->category['value'] : $this->category;
+        $product->diameter_id = is_array($this->diameter) ? $this->diameter['value'] : $this->diameter;
+        $product->tall_id = is_array($this->tall) ? $this->tall['value'] : $this->tall;
+        $product->wide_id = is_array($this->wide) ? $this->wide['value'] : $this->wide;
         $product->save();
 
         return $product;

@@ -1,4 +1,4 @@
-# Teste realizado para a ampresa Sumset.
+# Teste realizado para a ampresa Sunset.
 
 ## Desafio Técnico
 Objetivo: Criar um sistema básico de gerenciamento de e-commerce que inclua funcionalidades relacionadas a produto e usuário. Além da habilidade no desenvolvimento relacionado a e-commerce.

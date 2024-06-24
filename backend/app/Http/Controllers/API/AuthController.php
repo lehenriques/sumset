@@ -21,7 +21,7 @@ class AuthController extends BaseController
         try {
             $credentials = request(['email', 'password']);
             if (!$token = auth('api')->attempt($credentials)) {
-                return $this->sendError('Unauthorised.', ['error' => 'Usuário ou senha inválido!']);
+                return $this->sendError('Usuário ou senha inválido!.', []);
             }
         } catch (\Throwable | \Exception $e) {
             return ResponseService::exception('login', null, $e);

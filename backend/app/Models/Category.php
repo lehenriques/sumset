@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+    
+    protected $appends = ['select'];
+
+    public function getSelectAttribute()
+    {
+        return ['value' => $this->id, 'label' => $this->name];
+    }
 }

@@ -17,7 +17,7 @@ class ProductController extends BaseController
     public function index()
     {
         try {
-            $product = Product::with(['brand', 'category', 'diameter', 'tall', 'wide'])->get();
+            $product = Product::with(['brand', 'category', 'diameter', 'tall', 'wide'])->orderby('id', 'desc')->get();
         } catch (\Throwable | \Exception $e) {
             return ResponseService::exception('login', null, $e);
         }
@@ -37,7 +37,7 @@ class ProductController extends BaseController
             return ResponseService::exception('login', null, $e);
         }
 
-        return  $this->sendResponse($product, 'Produto Cadastrado com sucesso');
+        return  $this->sendResponse($product, 'Produto Cadastrado com sucesso', 201);
     }
 
     /**
@@ -46,7 +46,7 @@ class ProductController extends BaseController
     public function show(Product $product)
     {
         try {
-            $product = Product::with(['brand', 'category', 'diameter', 'tall', 'wide'])->whereId($product->id)->first();
+            $product = Product::with(['brand:id,name' , 'category:id,name', 'diameter:id,name', 'tall:id,name', 'wide:id,name'])->whereId($product->id)->first();
         } catch (\Throwable | \Exception $e) {
             return ResponseService::exception('login', null, $e);
         }
@@ -64,8 +64,8 @@ class ProductController extends BaseController
         } catch (\Throwable | \Exception $e) {
             return ResponseService::exception('login', null, $e);
         }
-
         return  $this->sendResponse($product, 'Produto alterdo com sucesso');
+
     }
 
     /**
@@ -79,6 +79,6 @@ class ProductController extends BaseController
             return ResponseService::exception('login', null, $e);
         }
 
-        return  $this->sendResponse($product, 'Produto deletado com sucesso');
+        return  $this->sendResponse('', 'Produto deletado com sucesso');
     }
 }
